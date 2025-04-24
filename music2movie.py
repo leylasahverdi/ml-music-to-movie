@@ -612,7 +612,13 @@ base_models(X, y, scoring="r2")
 #GBM      | r2: 0.9917
 #XGB      | r2: 0.9976
 
-
+regressors = [
+    ('LR', LinearRegression()),
+    ('KNN', KNeighborsRegressor()),
+    ('RF', RandomForestRegressor()),
+    ('GBM', GradientBoostingRegressor()),
+    ('XGB', XGBRegressor()),
+]
 
 def evaluate_models(X, y, regressors, cv=5):
     results = []
@@ -792,7 +798,6 @@ best_model = RandomForestRegressor(
 )
 
 best_model.fit(X_clean, y)
-
 scores = cross_val_score(best_model, X_clean, y, cv=5, scoring='neg_root_mean_squared_error')
 scores1 = cross_val_score(best_model, X_clean, y, cv=5, scoring='r2')
 #array([-3.03096627, -3.09865246, -3.18109359, -3.26373931, -3.24132459])
@@ -874,3 +879,4 @@ def recommend_varied_films(genre_keyword, X_columns, model, movie_df,
     return sampled[["title", "emotion_score", "vote_average", "final_score", "genre_group"]]
 
 recommend_varied_films('Experimental', X_clean.columns, best_model, movie_df, top_n=3)
+
